@@ -38,32 +38,39 @@ namespace :deploy do
     run "sudo rm -rf #{deploy_to}"
     run "sudo mkdir #{deploy_to}"
     run "sudo chown -R #{user}:#{user} #{deploy_to}"
+
   end
   
   task :deploy do
     run "cd #{deploy_to} && sudo wget #{artifact_url}"
     run "cd #{deploy_to} && sudo tar -zxf #{artifact}"
     run "cd #{deploy_to} && sudo rm #{artifact}"
+
   end
   
   task :bundle_install do
     run "cd #{deploy_to} && bundle install"
+
   end
   
   task :db_migrate do
     run "cd #{deploy_to} && sudo rake db:migrate"
+
   end
   
   task :start, :roles => :app do
     run "sudo service httpd start"
+
   end
 
   task :stop, :roles => :app do
     run "sudo service httpd stop"
+
   end
 
   desc "Restart Application"
   task :restart, :roles => :app do
     run "sudo service httpd restart"
+
   end
 end
